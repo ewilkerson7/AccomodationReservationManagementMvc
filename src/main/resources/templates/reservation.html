@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reservation Details</title>
+    <link rel="stylesheet" th:href="@{/webjars/github-com-twbs-bootstrap-/5.3.8/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/Site.css}"/>
+</head>
+<body class="container mt-5">
+
+<div class="card">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h3 class="mb-0" th:text="'Reservation: ' + ${reservation.reservationNumber}">Reservation: R123456789</h3>
+        <span th:text="${reservation.status}"
+              th:classappend="${reservation.status == 'DRAFT' ? 'badge bg-secondary' : (reservation.status == 'COMPLETED' ? 'badge bg-success' : 'badge bg-danger')}">
+            DRAFT
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Account Number:</strong>
+                <p th:text="${reservation.account?.accountNumber ?: 'Unassigned'}">A123456789</p>
+            </div>
+            <div class="col-md-6">
+                <strong>Start Date & Nights:</strong>
+                <p><span th:text="${reservation.startDate}">2026-11-15</span> (<span th:text="${reservation.numberOfNights}">3</span> Nights)</p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Physical Address:</strong>
+                <p th:text="${reservation.physicalAddress ?: 'N/A'}">123 Street</p>
+            </div>
+            <div class="col-md-6">
+                <strong>Mailing Address:</strong>
+                <p th:text="${reservation.mailingAddress ?: reservation.physicalAddress ?: 'N/A'}">123 Street</p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <strong>Bedrooms:</strong> <span th:text="${reservation.numberOfBedrooms}">1</span>
+            </div>
+            <div class="col-md-3">
+                <strong>Bathrooms:</strong> <span th:text="${reservation.numberOfBathrooms}">1</span>
+            </div>
+            <div class="col-md-3">
+                <strong>Beds:</strong> <span th:text="${reservation.numberOfBeds}">2</span>
+            </div>
+            <div class="col-md-3">
+                <strong>Size (SqFt):</strong> <span th:text="${reservation.lodgingSizeSqFt}">500</span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h4>Total Price:
+                <span th:if="${reservation.reservationPrice != null}" th:text="'$' + ${#numbers.formatDecimal(reservation.reservationPrice, 1, 2)}">$0.00</span>
+                <span th:unless="${reservation.reservationPrice != null}" class="text-muted">Pending</span>
+            </h4>
+            <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

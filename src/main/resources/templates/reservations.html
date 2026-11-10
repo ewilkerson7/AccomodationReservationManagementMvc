@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Accommodation Management - Reservations</title>
+    <link rel="stylesheet" th:href="@{/webjars/github-com-twbs-bootstrap-/5.3.8/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/Site.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/datatables/2.3.7/css/dataTables.bootstrap5.min.css}"/>
+</head>
+<body class="container mt-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Managed Reservations</h2>
+    <a th:href="@{/reservations/new}" class="btn btn-success">Create Reservation</a>
+</div>
+<hr>
+
+<table id="reservationsTable" class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th>Reservation #</th>
+        <th>Account #</th>
+        <th>Start Date</th>
+        <th>Nights</th>
+        <th>Status</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reservation : ${reservations}">
+        <td th:text="${reservation.reservationNumber}">R123456789</td>
+
+        <!-- FIX: Using SpEL safe navigation and Elvis operator to prevent null reference errors -->
+        <td th:text="${reservation.account?.accountNumber ?: 'Unassigned'}">A123456789</td>
+
+        <td th:text="${reservation.startDate}">2026-11-15</td>
+        <td th:text="${reservation.numberOfNights}">3</td>
+        <td>
+            <span th:text="${reservation.status}"
+                  th:classappend="${reservation.status == 'DRAFT' ? 'badge bg-secondary' : (reservation.status == 'COMPLETED' ? 'badge bg-success' : 'badge bg-danger')}">
+                DRAFT
+            </span>
+        </td>
+
+        <!-- FIX: Separating the Thymeleaf conditional from the expression to prevent eager evaluation of a null double -->
+       <td th:text="${reservation.reservationPrice != null} ? | $${#numbers.formatDecimal(reservation.reservationPrice, 1, 2)}| : 'Pending'">$0.00</td>
+        <!-- FIX: Updated action button to route to a specific reservation's details -->
+        <td>
+           <a th:href="@{/reservations/{reservationNumber}(reservationNumber=${reservation.reservationNumber})}" class="btn btn-sm btn-primary">View Details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/4.0.0/dist/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/github-com-twbs-bootstrap-/5.3.8/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/datatables/2.3.7/js/dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/datatables/2.3.7/js/dataTables.bootstrap5.min.js}"></script>
+<script>
+    $(document).ready(function() {
+        $('#reservationsTable').DataTable();
+    });
+</script>
+
+</body>
+</html>
+
