@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
-
     @Query("SELECT a FROM Account a LEFT JOIN FETCH a.reservations")
     List<Account> findAllWithReservations();
 
