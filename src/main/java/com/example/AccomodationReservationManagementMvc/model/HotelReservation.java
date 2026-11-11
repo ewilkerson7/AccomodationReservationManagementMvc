@@ -15,6 +15,10 @@ public class HotelReservation extends Reservation {
     }
 
     // Getters, Setters, and toString()
+    public String getReservationType()
+    {
+        return "HOTEL";
+    }
 
 
     public boolean getKitchenette() {

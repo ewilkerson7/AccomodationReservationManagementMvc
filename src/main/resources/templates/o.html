@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Reservations</title>
+    <link rel="stylesheet" th:href="@{/webjars/github-com-twbs-bootstrap-/5.3.8/css/bootstrap.min.css}"/>
+</head>
+<body class="container mt-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Reservations for Account: <span th:text="${accountNumber}"></span></h2>
+    <a th:href="@{/accounts/{accountNumber}/reservations/new(accountNumber=${accountNumber})}" class="btn btn-success">Add New Reservation</a>
+</div>
+<hr>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th>Reservation Number</th>
+        <th>Status</th>
+        <th>Start Date</th>
+        <th>Nights</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reservation : ${reservations}">
+        <td th:text="${reservation.reservationNumber}">R123456789</td>
+        <td th:text="${reservation.status}">DRAFT</td>
+        <td th:text="${reservation.startDate}">2023-01-01</td>
+        <td th:text="${reservation.numberOfNights}">3</td>
+        <td th:text="${reservation.reservationPrice != null ? '$' + reservation.reservationPrice : 'Pending'}">Pending</td>
+        <td>
+            <a th:href="@{/reservations/edit/{reservationNumber}(reservationNumber=${reservation.reservationNumber})}" class="btn btn-sm btn-warning">Edit</a>
+            <a th:href="@{/reservations/delete/{reservationNumber}/{accountNumber}(reservationNumber=${reservation.reservationNumber}, accountNumber=${accountNumber})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<a th:href="@{/accounts}" class="btn btn-secondary">Back to Accounts</a>
+
+</body>
+</html>

@@ -16,25 +16,48 @@ public class ReservationManagerService {
         this.reservationRepo = reservationRepo;
     }
 
+    // --- ACCOUNT CRUD ---
     public Account addAccount(Account account) {
         if (accountRepo.existsById(account.getAccountNumber())) {
-            throw new DuplicateObjectException("Account already exists on add action with the same account number: " + account.getAccountNumber()); //[cite: 2]
+            throw new DuplicateObjectException("Account already exists on add action with the same account number: " + account.getAccountNumber());
         }
         return accountRepo.save(account);
     }
 
+    public Account updateAccount(Account account) {
+        if (!accountRepo.existsById(account.getAccountNumber())) {
+            throw new IllegalArgumentException("Account not found for update.");
+        }
+        return accountRepo.save(account);
+    }
+
+    public void deleteAccount(String accountNumber) {
+        accountRepo.deleteById(accountNumber);
+    }
+
+    // --- RESERVATION CRUD ---
     public Reservation addDraftReservation(String accountNumber, Reservation reservation) {
         if (reservationRepo.existsById(reservation.getReservationNumber())) {
-            throw new DuplicateObjectException("Reservation object already exists with the same reservation number: " + reservation.getReservationNumber()); //[cite: 2]
+            throw new DuplicateObjectException("Reservation object already exists with the same reservation number: " + reservation.getReservationNumber());
         }
         Account account = accountRepo.findById(accountNumber)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found"));
 
-        reservation.setAccount(account); // Account number is updated when reservation is added to a specific account[cite: 2]
-        reservation.setStatus("DRAFT"); // New reservation always starts in draft status[cite: 2]
+        reservation.setAccount(account);
+        reservation.setStatus("DRAFT");
         return reservationRepo.save(reservation);
     }
 
+    public Reservation updateReservation(Reservation reservation) {
+        if (!reservationRepo.existsById(reservation.getReservationNumber())) {
+            throw new IllegalArgumentException("Reservation not found for update.");
+        }
+        return reservationRepo.save(reservation);
+    }
+
+    public void deleteReservation(String reservationNumber) {
+        reservationRepo.deleteById(reservationNumber);
+    }
     public double calculatePricePerNight(Reservation res) {
         double price = 120.0; // Basic price is $120[cite: 2]
 

@@ -9,6 +9,10 @@ public class HouseReservation extends Reservation {
 
     // Getters, Setters, and toString()
 
+    public String getReservationType()
+    {
+        return "HOUSE";
+    }
 
     public int getNumberOfFloors() {
         return numberOfFloors;

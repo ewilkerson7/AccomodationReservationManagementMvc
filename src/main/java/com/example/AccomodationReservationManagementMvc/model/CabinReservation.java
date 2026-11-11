@@ -10,6 +10,10 @@ public class CabinReservation extends Reservation {
 
     // Getters, Setters, and toString()
 
+    public String getReservationType()
+    {
+       return "CABIN";
+    }
 
     public boolean getFullKitchen() {
         return fullKitchen;

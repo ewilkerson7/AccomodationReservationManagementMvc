@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Reservation</title>
+    <link rel="stylesheet" th:href="@{/webjars/github-com-twbs-bootstrap-/5.3.8/css/bootstrap.min.css}"/>
+</head>
+<body class="container mt-5">
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Edit Reservation</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/reservations/update}" th:object="${reservation}" method="post">
+
+                    <!-- Ensure account association isn't lost on update -->
+                    <input type="hidden" th:field="*{account.accountNumber}" />
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Reservation Number</label>
+                            <input type="text" class="form-control" th:field="*{reservationNumber}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" th:field="*{status}">
+                                <option value="DRAFT">DRAFT</option>
+                                <option value="COMPLETED">COMPLETED</option>
+                                <option value="CANCELLED">CANCELLED</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" class="form-control" th:field="*{startDate}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Number of Nights</label>
+                            <input type="number" class="form-control" th:field="*{numberOfNights}" min="1" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Beds</label>
+                            <input type="number" class="form-control" th:field="*{numberOfBeds}">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Bedrooms</label>
+                            <input type="number" class="form-control" th:field="*{numberOfBedrooms}">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Bathrooms</label>
+                            <input type="number" class="form-control" th:field="*{numberOfBathrooms}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Physical Address</label>
+                        <input type="text" class="form-control" th:field="*{physicalAddress}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mailing Address</label>
+                        <input type="text" class="form-control" th:field="*{mailingAddress}">
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="javascript:history.back()" class="btn btn-secondary">Cancel / Back</a>
+                        <button type="submit" class="btn btn-primary">Update Reservation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
