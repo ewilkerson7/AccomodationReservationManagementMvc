@@ -1,5 +1,6 @@
 package com.example.AccomodationReservationManagementMvc.model;
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -14,6 +15,8 @@ public abstract class Reservation {
     @JoinColumn(name = "account_number")
     private Account account; // Account number updated when added[cite: 2]
 
+    @Column(name = "reservation_type", insertable = false, updatable = false)
+    private String reservationType;
     private String physicalAddress;
     private String mailingAddress; // If null, UI will know to use physical address[cite: 2]
     private LocalDate startDate;
@@ -41,6 +44,10 @@ public abstract class Reservation {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getReservationType() {
+        return reservationType;
     }
 
     public String getPhysicalAddress() {

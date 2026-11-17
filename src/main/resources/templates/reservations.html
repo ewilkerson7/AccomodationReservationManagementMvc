@@ -8,6 +8,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Reservations for Account: <span th:text="${accountNumber}"></span></h2>
+
     <a th:href="@{/accounts/{accountNumber}/reservations/new(accountNumber=${accountNumber})}" class="btn btn-success">Add New Reservation</a>
 </div>
 <hr>
@@ -33,7 +34,7 @@
         <td th:text="${reservation.numberOfNights}">3</td>
         <td th:text="${reservation.reservationPrice != null ? '$' + reservation.reservationPrice : 'Pending'}">Pending</td>
         <td>
-            <a th:href="@{/reservations/{reservationNumber}(reservationNumber=${reservation.reservationNumber})}" class="btn btn-sm btn-warning">Reservation Details</a>
+            <a th:href="@{/reservations/{reservationNumber}(reservationNumber=${reservation.reservationNumber})}" class="btn btn-sm btn-primary">Reservation Details</a>
             <a th:href="@{/reservations/edit/{reservationNumber}(reservationNumber=${reservation.reservationNumber})}" class="btn btn-sm btn-warning">Edit</a>
             <a th:href="@{/reservations/delete/{reservationNumber}/{accountNumber}(reservationNumber=${reservation.reservationNumber}, accountNumber=${accountNumber})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this reservation?')">Delete</a>
         </td>

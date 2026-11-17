@@ -16,16 +16,26 @@
                 <form th:action="@{/reservations/update}" th:object="${reservation}" method="post">
 
                     <!-- Ensure account association isn't lost on update -->
-                    <input type="hidden" th:field="*{account.accountNumber}" />
+                    <input type="hidden" th:field="*{accountNumber}" />
+
+                    <div class="mb-3">
+                        <label for="reservationType" class="form-label">Type:</label>
+                        <select class="form-select" id="reservationType" th:field="*{reservationType}" disabled>
+                            <option th:value="'HOTEL'" th:text="HOTEL"></option>
+                            <option th:value="'CABIN'" th:text="CABIN"></option>
+                            <option th:value="'HOUSE'" th:text="HOUSE"></option>
+                        </select>
+                        <input type="hidden" th:field="*{reservationType}" />
+                    </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Reservation Number</label>
-                            <input type="text" class="form-control" th:field="*{reservationNumber}" readonly>
+                            <label for="reservationNumber" class="form-label">Reservation Number</label>
+                            <input id="reservationNumber" type="text" class="form-control" th:field="*{reservationNumber}" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Status</label>
-                            <select class="form-control" th:field="*{status}">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status" class="form-control" th:field="*{status}">
                                 <option value="DRAFT">DRAFT</option>
                                 <option value="COMPLETED">COMPLETED</option>
                                 <option value="CANCELLED">CANCELLED</option>
@@ -35,39 +45,75 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Start Date</label>
-                            <input type="date" class="form-control" th:field="*{startDate}" required>
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input id="startDate" type="date" class="form-control" th:field="*{startDate}" required>
+                            <span class="error" th:if="${#fields.hasErrors('startDate')}"
+                                  th:errors="*{startDate}">reservationNumber Error</span>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Number of Nights</label>
-                            <input type="number" class="form-control" th:field="*{numberOfNights}" min="1" required>
+                            <label for="numberOfNights" class="form-label">Number of Nights</label>
+                            <input id="numberOfNights" type="number" class="form-control" th:field="*{numberOfNights}" min="1" required>
+                            <span class="error" th:if="${#fields.hasErrors('numberOfNights')}"
+                                  th:errors="*{numberOfNights}">reservationNumber Error</span>
                         </div>
                     </div>
-
+                    <div class="mb-3">
+                        <label for="lodgingSizeSqFt" class="form-label">Lodging Size (SqFt)</label>
+                        <input id="lodgingSizeSqFt" type="number" class="form-control" th:field="*{lodgingSizeSqFt}">
+                        <span class="error" th:if="${#fields.hasErrors('lodgingSizeSqFt')}"
+                              th:errors="*{lodgingSizeSqFt}">reservationNumber Error</span>
+                    </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">Beds</label>
-                            <input type="number" class="form-control" th:field="*{numberOfBeds}">
+                            <label for="numberOfBeds" class="form-label">Beds</label>
+                            <input id="numberOfBeds" type="number" class="form-control" th:field="*{numberOfBeds}">
+                            <span class="error" th:if="${#fields.hasErrors('numberOfBeds')}"
+                                  th:errors="*{numberOfBeds}">reservationNumber Error</span>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">Bedrooms</label>
-                            <input type="number" class="form-control" th:field="*{numberOfBedrooms}">
+                            <label for="numberOfBedrooms" class="form-label">Bedrooms</label>
+                            <input id="numberOfBedrooms" type="number" class="form-control" th:field="*{numberOfBedrooms}">
+                            <span class="error" th:if="${#fields.hasErrors('numberOfBedrooms')}"
+                                  th:errors="*{numberOfBedrooms}">reservationNumber Error</span>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label class="form-label">Bathrooms</label>
-                            <input type="number" class="form-control" th:field="*{numberOfBathrooms}">
+                            <label for="numberOfBathrooms" class="form-label">Bathrooms</label>
+                            <input id="numberOfBathrooms" type="number" class="form-control" th:field="*{numberOfBathrooms}">
+                            <span class="error" th:if="${#fields.hasErrors('numberOfBathrooms')}"
+                                  th:errors="*{numberOfBathrooms}">reservationNumber Error</span>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Physical Address</label>
-                        <input type="text" class="form-control" th:field="*{physicalAddress}">
+                        <label for="physicalAddress" class="form-label">Physical Address</label>
+                        <input id="physicalAddress" type="text" class="form-control" th:field="*{physicalAddress}">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Mailing Address</label>
-                        <input type="text" class="form-control" th:field="*{mailingAddress}">
+                        <label for="mailingAddress" class="form-label">Mailing Address</label>
+                        <input id="mailingAddress" type="text" class="form-control" th:field="*{mailingAddress}">
                     </div>
+
+                    <div class="mb-3" id="hotelFields">
+                        <label for="kitchenette">
+                            <input id="kitchenette" type="checkbox" th:field="*{kitchenette}" /> Kitchenette
+                        </label>
+                    </div>
+
+                    <div class="mb-3" id="cabinFields">
+                        <label for="fullKitchen">
+                            <input id="fullKitchen" type="checkbox" th:field="*{fullKitchen}" /> Full Kitchen
+                        </label>
+                        <label for="loft">
+                            <input id="loft" type="checkbox" th:field="*{loft}" /> Loft
+                        </label>
+                    </div>
+
+                    <div class="mb-3" id="houseFields">
+                        <label for="numberOfFloors" class="form-label">Floors</label>
+                        <input id="numberOfFloors" type="number" class="form-control" th:field="*{numberOfFloors}">
+                    </div>
+
 
                     <div class="d-flex justify-content-between mt-4">
                         <a href="javascript:history.back()" class="btn btn-secondary">Cancel / Back</a>
@@ -78,6 +124,22 @@
         </div>
     </div>
 </div>
+<!-- Add right before </body> -->
+<script>
+    const typeSelect = document.getElementById('reservationType');
+    const hotelFields = document.getElementById('hotelFields');
+    const cabinFields = document.getElementById('cabinFields');
+    const houseFields = document.getElementById('houseFields');
 
+    function toggleFields() {
+        const type = typeSelect.value;
+        hotelFields.classList.toggle('d-none', type !== 'HOTEL');
+        cabinFields.classList.toggle('d-none', type !== 'CABIN');
+        houseFields.classList.toggle('d-none', type !== 'HOUSE');
+    }
+
+    typeSelect.addEventListener('change', toggleFields);
+    toggleFields(); // Run once on page load
+</script>
 </body>
 </html>

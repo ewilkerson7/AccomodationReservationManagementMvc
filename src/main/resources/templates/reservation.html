@@ -9,7 +9,7 @@
 
 <div class="card">
     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-        <h3 class="mb-0" th:text="'Reservation: ' + ${reservation.reservationNumber}">Reservation: R123456789</h3>
+        <h3 class="mb-0" th:text="'Reservation: ' + ${reservation.reservationNumber} + ' ' + ${reservation.getReservationType()}">Reservation: R123456789</h3>
         <span th:text="${reservation.status}"
               th:classappend="${reservation.status == 'DRAFT' ? 'badge bg-secondary' : (reservation.status == 'COMPLETED' ? 'badge bg-success' : 'badge bg-danger')}">
             DRAFT

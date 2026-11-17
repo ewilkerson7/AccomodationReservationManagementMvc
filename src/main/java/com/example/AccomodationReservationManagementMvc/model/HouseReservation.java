@@ -9,11 +9,6 @@ public class HouseReservation extends Reservation {
 
     // Getters, Setters, and toString()
 
-    public String getReservationType()
-    {
-        return "HOUSE";
-    }
-
     public int getNumberOfFloors() {
         return numberOfFloors;
     }
@@ -26,4 +21,5 @@ public class HouseReservation extends Reservation {
     public String toString() {
         return super.toString();
     }
+
 }

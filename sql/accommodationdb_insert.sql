@@ -12,7 +12,7 @@ INSERT INTO reservation (
     start_date, number_of_nights, lodging_size_sq_ft, status, 
     full_kitchen, loft
 ) VALUES (
-    'R000000001', 'CABIN', 'A123456789', '10 Pine Trail', 
+    'C000000001', 'CABIN', 'A123456789', '10 Pine Trail', 
     '2026-12-01', 3, 850, 'DRAFT', 
     TRUE, TRUE
 );
@@ -24,7 +24,7 @@ INSERT INTO reservation (
     start_date, number_of_nights, number_of_beds, number_of_bedrooms, number_of_bathrooms,
     lodging_size_sq_ft, status, kitchenette
 ) VALUES (
-    'R000000002', 'HOTEL', 'A987654321', '200 Downtown Blvd', 
+    'H000000001', 'HOTEL', 'A987654321', '200 Downtown Blvd', 
     '2026-12-15', 2, 2, 1, 1, 
     400, 'COMPLETED', TRUE
 );
@@ -35,7 +35,7 @@ INSERT INTO reservation (
     start_date, number_of_nights, number_of_beds, number_of_bedrooms, number_of_bathrooms,
     lodging_size_sq_ft, status, number_of_floors
 ) VALUES (
-    'R000000003', 'HOUSE', 'A123456789', '77 Maple Court', 
+    'O000000001', 'HOUSE', 'A123456789', '77 Maple Court', 
     '2026-12-20', 7, 4, 3, 2, 
     2100, 'DRAFT', 2
 );

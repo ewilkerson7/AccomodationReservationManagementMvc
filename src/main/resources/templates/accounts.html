@@ -19,6 +19,7 @@
         <th>Account Number</th>
         <th>Email</th>
         <th>Phone</th>
+        <th>Mailing Address</th>
         <th>Total Reservations</th>
         <th>Actions</th>
     </tr>
@@ -28,6 +29,7 @@
         <td th:text="${account.accountNumber}">A123456789</td>
         <td th:text="${account.emailAddress}">test@example.com</td>
         <td th:text="${account.phoneNumber}">555-1234</td>
+        <td th:text="${account.mailingAddress}">123 Main St, Springfield</td>
         <td th:text="${account.reservations.size()}">2</td>
         <td>
             <a th:href="@{/accounts/reservations/{accountNumber}(accountNumber=${account.accountNumber})}" class="btn btn-sm btn-primary">Reservations</a>

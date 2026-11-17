@@ -52,6 +52,26 @@ public class ReservationManagerService {
         if (!reservationRepo.existsById(reservation.getReservationNumber())) {
             throw new IllegalArgumentException("Reservation not found for update.");
         }
+
+        String currentStatus = reservationRepo.findStatusByReservationNumber(reservation.getReservationNumber());
+
+        if ("COMPLETED".equals(currentStatus) || "CANCELLED".equals(currentStatus)) {
+            throw new IllegalOperationException("Cannot modify a reservation that is already " + currentStatus);
+        }
+
+        if ("COMPLETED".equals(reservation.getStatus())) {
+            double perNight = calculatePricePerNight(reservation);
+            reservation.setReservationPrice(perNight * reservation.getNumberOfNights());
+            reservation.setStatus("COMPLETED");
+        } else if ("CANCELLED".equals(reservation.getStatus())) {
+            if (!reservation.getStartDate().isAfter(LocalDate.now())) {
+                throw new IllegalOperationException("Can only be cancelled if the start date is in the future: " + reservation.getReservationNumber());
+            }
+            reservation.setStatus("CANCELLED");
+        } else {
+            reservation.setStatus(reservation.getStatus());
+        }
+
         return reservationRepo.save(reservation);
     }
 
@@ -108,4 +128,14 @@ public class ReservationManagerService {
         res.setStatus("CANCELLED");
         return reservationRepo.save(res);
     }
+
+    //throwingAddressBooks: / by zero
+    public void throwingReservationManagerService() {
+        int x = 0;
+        int y = 1;
+
+        if(y/x == 0)
+            throw new IllegalArgumentException();
+    }
+
 }
