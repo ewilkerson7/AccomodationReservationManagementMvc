@@ -114,8 +114,8 @@
 
                     <div class="mb-3" id="houseFields">
                         <label for="numberOfFloors" class="form-label">Floors</label>
-                        <input id="numberOfFloors" type="number" class="form-control" th:field="*{numberOfFloors}">
-                   </div>
+                        <input id="numberOfFloors" type="number" class="form-control" th:field="*{numberOfFloors}" min="1" required>
+                    </div>
 
 
                     <div class="d-flex justify-content-between mt-4">
@@ -136,9 +136,21 @@
 
     function toggleFields() {
         const type = typeSelect.value;
-        hotelFields.classList.toggle('d-none', type !== 'HOTEL');
-        cabinFields.classList.toggle('d-none', type !== 'CABIN');
-        houseFields.classList.toggle('d-none', type !== 'HOUSE');
+
+        const toggleSection = (element, isVisible) => {
+            element.classList.toggle('d-none', !isVisible);
+            element.querySelectorAll('input, select, textarea').forEach(input => {
+                input.disabled = !isVisible;
+            });
+        };
+
+        toggleSection(hotelFields, type === 'HOTEL');
+        toggleSection(cabinFields, type === 'CABIN');
+        toggleSection(houseFields, type === 'HOUSE');
+
+      //  hotelFields.classList.toggle('d-none', type !== 'HOTEL');
+      //  cabinFields.classList.toggle('d-none', type !== 'CABIN');
+     //   houseFields.classList.toggle('d-none', type !== 'HOUSE');
     }
 
     typeSelect.addEventListener('change', toggleFields);

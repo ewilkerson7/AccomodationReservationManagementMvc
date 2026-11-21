@@ -117,7 +117,8 @@ public class AccountController {
         Reservation reservation;
         String reservationNumber;
 
-        switch (form.getReservationType()) {
+        String type = form.getReservationType() != null ? form.getReservationType() : "HOTEL";
+        switch (type) {
             case "CABIN" -> {
                 CabinReservation cabin = new CabinReservation();
                 cabin.setFullKitchen(form.getFullKitchen());
@@ -141,6 +142,7 @@ public class AccountController {
 
         // Copy common fields
         reservation.setReservationNumber(reservationNumber);
+        reservation.setReservationType(type);
         reservation.setStartDate(form.getStartDate());
         reservation.setNumberOfNights(form.getNumberOfNights());
         reservation.setLodgingSizeSqFt(form.getLodgingSizeSqFt());
@@ -185,7 +187,12 @@ public class AccountController {
     }
 
     @PostMapping("/reservations/update")
-    public String updateReservation(@ModelAttribute ReservationForm form) {
+    public String updateReservation(@Valid @ModelAttribute ReservationForm form, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "reservationEdit";
+        }
+
         Reservation existing = reservationRepository.findById(form.getReservationNumber()).orElseThrow();
 
         // Update fields directly on the existing managed entity (or recreate if type changed)

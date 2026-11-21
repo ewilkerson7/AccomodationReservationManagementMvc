@@ -50,6 +50,10 @@ public abstract class Reservation {
         return reservationType;
     }
 
+    public void setReservationType(String reservationType) {
+        this.reservationType = reservationType;
+    }
+
     public String getPhysicalAddress() {
         return physicalAddress;
     }

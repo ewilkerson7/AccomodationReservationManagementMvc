@@ -50,9 +50,7 @@ public class ReservationForm {
     private boolean kitchenette;
     private boolean fullKitchen;
     private boolean loft;
-
-   // @Min(value = 1, message = "numberOfFloors cannot be zero.")
-    private int numberOfFloors = 1;
+    private int numberOfFloors;
 
     public String getAccountNumber() {
         return accountNumber;
